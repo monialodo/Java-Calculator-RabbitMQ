@@ -1,6 +1,11 @@
 package service;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import service.errors.DivideByZeroException;
 import utils.RabbitMQConstants;
 import utils.Operands;
@@ -15,16 +20,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.swing.text.Position;
 import java.math.BigDecimal;
 
 @RestController
+@Tag(name = "Calculadora", description = "Endpoints para operações da calculadora")
 public class CalculatorController {
 
     @Autowired private RabbitTemplate rabbitTemplate;
     private static final String NAME_DIRECT_EXCHANGE = RabbitMQConstants.NAME_EXCHANGE;
     private static final Logger logger = LoggerFactory.getLogger(CalculatorController.class);
 
+
     @GetMapping(value = "/sum")
+    @Operation(
+            summary = "Realiza a soma de dois números",
+            tags = {"Calculadora"})
     public ResponseEntity<CalculatorResult> sum (@RequestParam ("a") BigDecimal a, @RequestParam ("b") BigDecimal b)
             throws NumberFormatException {
         BigDecimal result = sanitizeAndSendMessage(a, b, RabbitMQConstants.SUM);
@@ -32,6 +43,9 @@ public class CalculatorController {
     }
 
     @GetMapping("/subtract")
+    @Operation(
+            summary = "Realiza a subtração de dois números",
+            tags = {"Calculadora"})
     public ResponseEntity<CalculatorResult> subtract (@RequestParam("a") BigDecimal a, @RequestParam("b") BigDecimal b)
             throws NumberFormatException {
         BigDecimal result = sanitizeAndSendMessage(a, b, RabbitMQConstants.SUBTRACT);
@@ -39,6 +53,9 @@ public class CalculatorController {
     }
 
     @GetMapping("/multiply")
+    @Operation(
+            summary = "Realiza a multiplicação de dois números",
+            tags = {"Calculadora"})
     public ResponseEntity<CalculatorResult> multiply (@RequestParam("a") BigDecimal a, @RequestParam("b") BigDecimal b)
             throws NumberFormatException {
         BigDecimal result = sanitizeAndSendMessage(a, b, RabbitMQConstants.MULTIPLY);
@@ -46,6 +63,9 @@ public class CalculatorController {
     }
 
     @GetMapping("/divide")
+    @Operation(
+            summary = "Realiza a divisão de dois números",
+            tags = {"Calculadora"})
     public ResponseEntity<CalculatorResult> divide (@RequestParam("a") BigDecimal a, @RequestParam("b") BigDecimal b)
             throws DivideByZeroException, NumberFormatException {
 
@@ -68,7 +88,7 @@ public class CalculatorController {
 
     private BigDecimal sanitizeAndSendMessage(BigDecimal a, BigDecimal b, String operation)
             throws NumberFormatException {
-        logger.info("received payload /" + operation + "?a=" + a + "&b=" + b);
+        logger.info("received payload " + operation + "?a=" + a + "&b=" + b);
         try {
             Operands operands = new Operands(a, b);
             setRequestId();
