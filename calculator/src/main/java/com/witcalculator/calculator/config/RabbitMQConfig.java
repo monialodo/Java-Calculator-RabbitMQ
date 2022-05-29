@@ -1,5 +1,6 @@
 package com.witcalculator.calculator.config;
 
+import utils.RabbitMQConstants;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -13,16 +14,10 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import utils.RabbitMQConstants;
 
 
 @Configuration
 public class RabbitMQConfig {
-
-
-
-
-
 
     @Bean
     public ConnectionFactory connectionFactory(){
@@ -36,18 +31,15 @@ public class RabbitMQConfig {
         return rabbitAdmin;
     }
 
-
     @Bean
     Queue sumQueue () {
         return new Queue(RabbitMQConstants.QUEUE_SUM, false);
     }
 
-
     @Bean
     Queue subtractQueue () {
         return new Queue(RabbitMQConstants.QUEUE_SUBTRACT, false);
     }
-
 
     @Bean
     Queue multiplyQueue () {
@@ -67,40 +59,35 @@ public class RabbitMQConfig {
 
     @Bean
     Binding sumBinding (Queue sumQueue, DirectExchange directExchange) {
-        return BindingBuilder.bind(sumQueue).to(directExchange).with(sumQueue.getName());
+        return BindingBuilder.bind(sumQueue).to(directExchange).with(RabbitMQConstants.SUM);
     }
 
     @Bean
     Binding subtractBinding (Queue subtractQueue, DirectExchange directExchange) {
-        return BindingBuilder.bind(subtractQueue).to(directExchange).with(subtractQueue.getName());
+        return BindingBuilder.bind(subtractQueue).to(directExchange).with(RabbitMQConstants.SUBTRACT);
     }
 
     @Bean
     Binding multiplyBinding (Queue multiplyQueue, DirectExchange directExchange) {
-        return BindingBuilder.bind(multiplyQueue)  .to(directExchange).with(multiplyQueue.getName());
+        return BindingBuilder.bind(multiplyQueue)  .to(directExchange).with(RabbitMQConstants.MULTIPLY);
     }
-
 
     @Bean
     Binding divideBinding (Queue divideQueue, DirectExchange directExchange) {
-        return BindingBuilder.bind(divideQueue).to(directExchange).with(divideQueue.getName());
+        return BindingBuilder.bind(divideQueue).to(directExchange).with(RabbitMQConstants.DIVIDE);
     }
 
-    @Bean
-    RabbitTemplate rabbitTemplate() {
+    @Bean RabbitTemplate rabbitTemplate() {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
         rabbitTemplate.setMessageConverter(new MessageConverter());
         return rabbitTemplate;
     }
 
 
-
-
-
-    @Bean (name = "rabbitListenerContainerFactory")
+    @Bean(name = "rabbitListenerContainerFactory")
     SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(
             SimpleRabbitListenerContainerFactoryConfigurer configurer) {
-        SimpleRabbitListenerContainerFactory factory= new SimpleRabbitListenerContainerFactory();
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         configurer.configure(factory, connectionFactory());
         factory.setAdviceChain(new Filter());
         return factory;

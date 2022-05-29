@@ -1,17 +1,18 @@
 package com.witcalculator.calculator.config;
 
+import utils.RabbitMQConstants;
+import java.util.UUID;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.MDC;
 import org.springframework.amqp.core.Message;
-import utils.RabbitMQConstants;
+import org.springframework.stereotype.Component;
 
-import java.util.UUID;
 
+@Component
 public class Filter implements MethodInterceptor {
 
-
-    @Override
+   @Override
     public Object invoke (MethodInvocation methodInvocation) throws Throwable {
         Object [] args = methodInvocation.getArguments();
         Message message = (Message) args [1];
@@ -28,7 +29,5 @@ public class Filter implements MethodInterceptor {
         } finally {
             MDC.remove(RabbitMQConstants.REQUEST_ID);
         }
-
     }
-
 }
