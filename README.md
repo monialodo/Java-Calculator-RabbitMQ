@@ -10,7 +10,7 @@
 * [Features](#features)
 * [Como usar](#como-usar)
     * [Pre Requisitos](#pre-requisitos)
-    * [Como Iniciar](#rodando-o-back-end-servidor)
+    * [Iniciando](#Iniciando)
 * [Tecnologias](#tecnologias)
 
 ### Sobre
@@ -35,7 +35,7 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 [Git](https://git-scm.com), [Java](https://www.java.com/pt-BR/), [Maven](https://maven.apache.org/download.cgi) e [Docker](https://www.docker.com)
 
 
-### 🎲 Rodando o Back End (servidor)
+### 🎲 Iniciando (servidor)
 
 ```bash
 # Clone este repositório
