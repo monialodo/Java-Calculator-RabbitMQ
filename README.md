@@ -17,7 +17,7 @@
 
 <p>Projeto desenvolvido seguindo os requerimentos enviados. A calculadora conta com as funções básicas de soma, subtração, 
 multiplicação e divisão.
-<p>A entrada é de apenas dois operandos, ambos com suporte para *arbitraryprecision signed decimal numbers*
+<p>A entrada é de apenas dois operandos, ambos com suporte para arbitraryprecision signed decimal number
 
 
 
