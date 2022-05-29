@@ -1,4 +1,4 @@
-package com.witcalculator.calculator.config;
+package consumers.config;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;

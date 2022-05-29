@@ -1,4 +1,4 @@
-package com.witcalculator.calculator;
+package consumers;
 
 
 import utils.RabbitMQConstants;
@@ -14,13 +14,12 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-@RabbitListener(queues = RabbitMQConstants.QUEUE_DIV)
-public class DividerConsumer {
+public class DivideConsumer {
 
-    private static Logger logger = LoggerFactory.getLogger(DividerConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(DivideConsumer.class);
 
 
-    @RabbitHandler
+    @RabbitListener(queues = RabbitMQConstants.QUEUE_DIV)
     public BigDecimal receiveMessage (Operands operands) {
         logger.info("Received message " + operands);
         BigDecimal result = operands.getA().divide(operands.getB(), 3, RoundingMode.HALF_EVEN);

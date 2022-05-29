@@ -1,4 +1,4 @@
-package com.witcalculator.calculator;
+package consumers;
 
 import utils.RabbitMQConstants;
 import utils.Operands;
@@ -11,18 +11,16 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-@RabbitListener(queues = RabbitMQConstants.QUEUE_SUBTRACT)
-public class SubtractConsumer {
+public class MultiplyConsumer {
 
-    private static Logger logger = LoggerFactory.getLogger(SubtractConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(MultiplyConsumer.class);
 
-    @RabbitHandler
+
+    @RabbitListener(queues = RabbitMQConstants.QUEUE_MULT)
     public BigDecimal receiveMessage (Operands operands) {
         logger.info("Received message " + operands);
-        BigDecimal result = operands.getA().subtract(operands.getB());
-        logger.info("Subtraction result " + result);
+        BigDecimal result = operands.getA().multiply(operands.getB());
+        logger.info("Multiplication result " + result);
         return result;
-
     }
-
 }

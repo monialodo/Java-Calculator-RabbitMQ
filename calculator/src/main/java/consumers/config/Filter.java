@@ -1,4 +1,4 @@
-package com.witcalculator.calculator.config;
+package consumers.config;
 
 import utils.RabbitMQConstants;
 import java.util.UUID;

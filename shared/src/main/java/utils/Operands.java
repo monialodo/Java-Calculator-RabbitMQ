@@ -7,12 +7,9 @@ import java.util.Objects;
 
 public class Operands implements Serializable {
 
-    private BigDecimal a;
-    private BigDecimal b;
+    private final BigDecimal a;
+    private final BigDecimal b;
 
-    public Operands() {
-
-    }
 
     public Operands(BigDecimal a, BigDecimal b) {
         this.a = a;
@@ -28,13 +25,6 @@ public class Operands implements Serializable {
         return b;
     }
 
-    public void setA(BigDecimal a) {
-        this.a = a;
-    }
-
-    public void setB(BigDecimal b) {
-        this.b = b;
-    }
 
     @Override
     public String toString() {

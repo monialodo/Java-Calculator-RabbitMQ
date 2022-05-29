@@ -1,4 +1,4 @@
-package com.witcalculator.calculator.config;
+package consumers.config;
 
 import utils.RabbitMQConstants;
 import org.springframework.amqp.core.AmqpAdmin;
@@ -85,11 +85,11 @@ public class RabbitMQConfig {
 
 
     @Bean(name = "rabbitListenerContainerFactory")
-    SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(
+    SimpleRabbitListenerContainerFactory myContainerFactory(
             SimpleRabbitListenerContainerFactoryConfigurer configurer) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        configurer.configure(factory, connectionFactory());
         factory.setAdviceChain(new Filter());
+        configurer.configure(factory, connectionFactory());
         return factory;
     }
 

@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 public class LogbackConfig {
     @Bean
     public FilterRegistrationBean loggingFilter() {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new TeeFilter());
-        return filterRegistrationBean;
+        return new FilterRegistrationBean(new TeeFilter());
     }
 }

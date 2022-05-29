@@ -22,27 +22,27 @@ public class CalculatorController {
 
     @Autowired private RabbitTemplate rabbitTemplate;
     private static final String NAME_DIRECT_EXCHANGE = RabbitMQConstants.NAME_EXCHANGE;
-    private static Logger logger = LoggerFactory.getLogger(CalculatorController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CalculatorController.class);
 
     @GetMapping(value = "/sum")
     public ResponseEntity<CalculatorResult> sum (@RequestParam ("a") BigDecimal a, @RequestParam ("b") BigDecimal b)
             throws NumberFormatException {
         BigDecimal result = sanitizeAndSendMessage(a, b, RabbitMQConstants.SUM);
-        return new ResponseEntity<CalculatorResult>(new CalculatorResult(result), HttpStatus.OK);
+        return new ResponseEntity<>(new CalculatorResult(result), HttpStatus.OK);
     }
 
     @GetMapping("/subtract")
     public ResponseEntity<CalculatorResult> subtract (@RequestParam("a") BigDecimal a, @RequestParam("b") BigDecimal b)
             throws NumberFormatException {
         BigDecimal result = sanitizeAndSendMessage(a, b, RabbitMQConstants.SUBTRACT);
-        return new ResponseEntity<CalculatorResult>(new CalculatorResult(result), HttpStatus.OK);
+        return new ResponseEntity<>(new CalculatorResult(result), HttpStatus.OK);
     }
 
     @GetMapping("/multiply")
     public ResponseEntity<CalculatorResult> multiply (@RequestParam("a") BigDecimal a, @RequestParam("b") BigDecimal b)
             throws NumberFormatException {
         BigDecimal result = sanitizeAndSendMessage(a, b, RabbitMQConstants.MULTIPLY);
-        return new ResponseEntity<CalculatorResult>(new CalculatorResult(result), HttpStatus.OK);
+        return new ResponseEntity<>(new CalculatorResult(result), HttpStatus.OK);
     }
 
     @GetMapping("/divide")
@@ -53,7 +53,7 @@ public class CalculatorController {
             throw new DivideByZeroException ("Impossible to divide by zero");
         }
         BigDecimal result = sanitizeAndSendMessage(a, b, RabbitMQConstants.DIVIDE);
-        return new ResponseEntity<CalculatorResult>(new CalculatorResult(result), HttpStatus.OK);
+        return new ResponseEntity<>(new CalculatorResult(result), HttpStatus.OK);
     }
 
     private void setRequestId() {

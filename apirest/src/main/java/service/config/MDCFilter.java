@@ -16,16 +16,15 @@ import java.util.UUID;
 public class MDCFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest,
-                                    HttpServletResponse httpServletResponse, FilterChain filterChain)
+    protected void doFilterInternal (HttpServletRequest request,
+                                    HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String requestId = UUID.randomUUID().toString();
         MDC.put(RabbitMQConstants.REQUEST_ID, requestId);
 
-        HttpServletResponse httpResponse = (HttpServletResponse) httpServletResponse;
-        httpResponse.addHeader(RabbitMQConstants.REQUEST_ID, requestId);
+        response.addHeader(RabbitMQConstants.REQUEST_ID, requestId);
 
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        filterChain.doFilter(request, response);
 
         MDC.remove(RabbitMQConstants.REQUEST_ID);
     }
